@@ -20,32 +20,32 @@ GRUPE_LINKURI = {
     "501": {
         "sediu": "Botanica",
         "instructor": "Pădureț Andrei",
-        "link": "https://t.me/+xr11I1hqhegwOGZi"
+        "link": "https://t.me/+zT4NxH-zRyk5ODgy"
     },
     "502": {
         "sediu": "Botanica",
         "instructor": "Pădureț Andrei",
-        "link": "https://t.me/+ZnpPMLiz31ZlNWNi"
+        "link": "https://t.me/+B9q7Zqp0BQo1ZjRi"
     },
     "503": {
         "sediu": "Botanica",
         "instructor": "Murahovschi Pavel",
-        "link": "https://t.me/+FIVltLewmUQxMWYy"
+        "link": "https://t.me/+uQCLVLUFV1plYTVi"
     },
     "42": {
         "sediu": "Ciocana",
         "instructor": "Uscatu Ion-Mihail",
-        "link": "https://t.me/+eqOPYvLSVntlMWJi"
+        "link": "https://t.me/+fY7Ye5Og-VxkZDQy"
     },
     "43": {
         "sediu": "Ciocana",
         "instructor": "Uscatu Ion-Mihail",
-        "link": "https://t.me/+pWJUYFn7kesyMzli"
+        "link": "https://t.me/+KMn8eWvVsFBkNzZi"
     },
     "44": {
         "sediu": "Ciocana",
         "instructor": "Cecan Artur",
-        "link": "https://t.me/+9xcdpLU0AVM1MmJi"
+        "link": "https://t.me/+--athpFpXr9kMTBi"
     }
 }
 
