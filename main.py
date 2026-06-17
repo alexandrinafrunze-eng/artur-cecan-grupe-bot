@@ -6,25 +6,27 @@ import asyncio
 TOKEN = os.getenv("BOT_TOKEN")
 
 GRUPE = {
-    "Pavel": {
-        "Pavel - 11 iunie": "https://t.me/link_pavel_11",
-        "Pavel - 25 iunie": "https://t.me/link_pavel_25"
+    "Botanica": {
+        "Grupa 501 - Pădureț Andrei": "https://t.me/+xr11I1hqhegwOGZi",
+        "Grupa 502 - Pădureț Andrei": "https://t.me/+ZnpPMLiz31ZlNWNi",
+        "Grupa 503 - Murahovschi Pavel": "https://t.me/+FIVltLewmUQxMWYy"
     },
-    "Artur": {
-        "Artur - 7 iulie": "https://t.me/link_artur_7"
-    },
-    "Andrei": {
-        "Andrei - 18 iunie": "https://t.me/link_andrei_18"
+    "Ciocana": {
+        "Grupa 42 - Uscatu Ion-Mihail": "https://t.me/+eqOPYvLSVntlMWJi",
+        "Grupa 43 - Uscatu Ion-Mihail": "https://t.me/+pWJUYFn7kesyMzli",
+        "Grupa 44 - Cecan Artur": "https://t.me/+9xcdpLU0AVM1MmJi"
     }
 }
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    keyboard = [[InlineKeyboardButton(profesor, callback_data=f"prof_{profesor}")]
-                for profesor in GRUPE.keys()]
+    keyboard = [
+        [InlineKeyboardButton("📍 Botanica", callback_data="sediu_Botanica")],
+        [InlineKeyboardButton("📍 Ciocana", callback_data="sediu_Ciocana")]
+    ]
 
     await update.message.reply_text(
-        "🚗 Bun venit la Școala Auto Artur Cecan!\n\nAlege profesorul:",
+        "🚗 Bun venit la Școala Auto Artur Cecan!\n\nSelectează sediul unde ești înscris:",
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
@@ -35,27 +37,50 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     data = query.data
 
-    if data.startswith("prof_"):
-        profesor = data.replace("prof_", "")
+    if data.startswith("sediu_"):
+        sediu = data.replace("sediu_", "")
 
-        keyboard = [
-            [InlineKeyboardButton(grupa, callback_data=f"grupa_{profesor}|{grupa}")]
-            for grupa in GRUPE[profesor]
-        ]
+        keyboard = []
+
+        for grupa in GRUPE[sediu]:
+            keyboard.append(
+                [InlineKeyboardButton(grupa, callback_data=f"grupa_{sediu}|{grupa}")]
+            )
+
+        keyboard.append(
+            [InlineKeyboardButton("⬅️ Înapoi", callback_data="inapoi")]
+        )
 
         await query.edit_message_text(
-            f"📚 Grupele profesorului {profesor}:",
+            f"📚 Grupe disponibile la sediul {sediu}:",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
     elif data.startswith("grupa_"):
         info = data.replace("grupa_", "")
-        profesor, grupa = info.split("|")
+        sediu, grupa = info.split("|")
 
-        link = GRUPE[profesor][grupa]
+        link = GRUPE[sediu][grupa]
+
+        keyboard = [
+            [InlineKeyboardButton("🔗 Intră în grup", url=link)],
+            [InlineKeyboardButton("⬅️ Înapoi la grupe", callback_data=f"sediu_{sediu}")]
+        ]
 
         await query.edit_message_text(
-            f"✅ Ai selectat:\n\n{grupa}\n\n🔗 Link grup:\n{link}"
+            f"✅ Ai selectat:\n\n{sediu}\n{grupa}",
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
+
+    elif data == "inapoi":
+        keyboard = [
+            [InlineKeyboardButton("📍 Botanica", callback_data="sediu_Botanica")],
+            [InlineKeyboardButton("📍 Ciocana", callback_data="sediu_Ciocana")]
+        ]
+
+        await query.edit_message_text(
+            "🚗 Bun venit la Școala Auto Artur Cecan!\n\nSelectează sediul unde ești înscris:",
+            reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
 
@@ -75,9 +100,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-    app.run_polling()
-
-
-if __name__ == "__main__":
-    main()
