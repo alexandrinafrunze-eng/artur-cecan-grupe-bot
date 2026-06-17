@@ -6,16 +6,40 @@ import asyncio
 TOKEN = os.getenv("BOT_TOKEN")
 
 GRUPE = {
-    "Botanica": {
-        "Grupa 501 - Pădureț Andrei": "https://t.me/+xr11I1hqhegwOGZi",
-        "Grupa 502 - Pădureț Andrei": "https://t.me/+ZnpPMLiz31ZlNWNi",
-        "Grupa 503 - Murahovschi Pavel": "https://t.me/+FIVltLewmUQxMWYy"
-    },
-    "Ciocana": {
-        "Grupa 42 - Uscatu Ion-Mihail": "https://t.me/+eqOPYvLSVntlMWJi",
-        "Grupa 43 - Uscatu Ion-Mihail": "https://t.me/+pWJUYFn7kesyMzli",
-        "Grupa 44 - Cecan Artur": "https://t.me/+9xcdpLU0AVM1MmJi"
-    }
+    "Botanica": [
+        {
+            "grupa": "501",
+            "instructor": "Pădureț Andrei",
+            "link": "https://t.me/+xr11I1hqhegwOGZi"
+        },
+        {
+            "grupa": "502",
+            "instructor": "Pădureț Andrei",
+            "link": "https://t.me/+ZnpPMLiz31ZlNWNi"
+        },
+        {
+            "grupa": "503",
+            "instructor": "Murahovschi Pavel",
+            "link": "https://t.me/+FIVltLewmUQxMWYy"
+        }
+    ],
+    "Ciocana": [
+        {
+            "grupa": "42",
+            "instructor": "Uscatu Ion-Mihail",
+            "link": "https://t.me/+eqOPYvLSVntlMWJi"
+        },
+        {
+            "grupa": "43",
+            "instructor": "Uscatu Ion-Mihail",
+            "link": "https://t.me/+pWJUYFn7kesyMzli"
+        },
+        {
+            "grupa": "44",
+            "instructor": "Cecan Artur",
+            "link": "https://t.me/+9xcdpLU0AVM1MmJi"
+        }
+    ]
 }
 
 
@@ -41,10 +65,16 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if data.startswith("sediu_"):
         sediu = data.replace("sediu_", "")
 
-        keyboard = [
-            [InlineKeyboardButton(grupa, callback_data=f"grupa_{sediu}|{grupa}")]
-            for grupa in GRUPE[sediu]
-        ]
+        keyboard = []
+
+        for index, item in enumerate(GRUPE[sediu]):
+            text_buton = f"📚 Grupa {item['grupa']} | 👨‍🏫 {item['instructor']}"
+            keyboard.append([
+                InlineKeyboardButton(
+                    text_buton,
+                    callback_data=f"grupa_{sediu}|{index}"
+                )
+            ])
 
         keyboard.append([InlineKeyboardButton("⬅️ Înapoi", callback_data="inapoi")])
 
@@ -56,21 +86,20 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     elif data.startswith("grupa_"):
         info = data.replace("grupa_", "")
-        sediu, grupa = info.split("|")
-
-        link = GRUPE[sediu][grupa]
+        sediu, index = info.split("|")
+        item = GRUPE[sediu][int(index)]
 
         keyboard = [
-            [InlineKeyboardButton("🔗 Intră în grup", url=link)],
+            [InlineKeyboardButton("🔗 Intră în grup", url=item["link"])],
             [InlineKeyboardButton("⬅️ Înapoi la grupe", callback_data=f"sediu_{sediu}")]
         ]
 
         await query.edit_message_text(
             f"🚗 Școala Auto Artur Cecan\n\n"
-            f"✅ Ai ales:\n"
             f"📍 Sediul: {sediu}\n"
-            f"📚 {grupa}\n\n"
-            f"Apasă butonul de mai jos pentru a intra în grupul tău Telegram.",
+            f"📚 Grupa: {item['grupa']}\n"
+            f"👨‍🏫 Instructor: {item['instructor']}\n\n"
+            f"Apasă butonul de mai jos pentru a intra în grupul Telegram.",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
