@@ -1,6 +1,7 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 import os
+import asyncio
 
 TOKEN = os.getenv("BOT_TOKEN")
 
@@ -19,12 +20,8 @@ GRUPE = {
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    keyboard = []
-
-    for profesor in GRUPE.keys():
-        keyboard.append(
-            [InlineKeyboardButton(profesor, callback_data=f"prof_{profesor}")]
-        )
+    keyboard = [[InlineKeyboardButton(profesor, callback_data=f"prof_{profesor}")]
+                for profesor in GRUPE.keys()]
 
     await update.message.reply_text(
         "🚗 Bun venit la Școala Auto Artur Cecan!\n\nAlege profesorul:",
@@ -41,12 +38,10 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if data.startswith("prof_"):
         profesor = data.replace("prof_", "")
 
-        keyboard = []
-
-        for grupa in GRUPE[profesor]:
-            keyboard.append(
-                [InlineKeyboardButton(grupa, callback_data=f"grupa_{profesor}|{grupa}")]
-            )
+        keyboard = [
+            [InlineKeyboardButton(grupa, callback_data=f"grupa_{profesor}|{grupa}")]
+            for grupa in GRUPE[profesor]
+        ]
 
         await query.edit_message_text(
             f"📚 Grupele profesorului {profesor}:",
@@ -64,11 +59,22 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 
-def main():
+async def main():
     app = Application.builder().token(TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CallbackQueryHandler(button))
+
+    await app.initialize()
+    await app.start()
+    await app.updater.start_polling()
+
+    while True:
+        await asyncio.sleep(3600)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
 
     app.run_polling()
 
