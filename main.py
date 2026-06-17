@@ -7,14 +7,14 @@ TOKEN = os.getenv("BOT_TOKEN")
 
 GRUPE = {
     "Botanica": [
-        {"grupa": "501", "instructor": "Pădureț Andrei", "link": "https://t.me/+zT4NxH-zRyk5ODgy"},
-        {"grupa": "502", "instructor": "Pădureț Andrei", "link": "https://t.me/+B9q7Zqp0BQo1ZjRi"},
-        {"grupa": "503", "instructor": "Murahovschi Pavel", "link": "https://t.me/+uQCLVLUFV1plYTVi"},
+        {"grupa": "501", "profesor": "Pădureț Andrei", "link": "https://t.me/+zT4NxH-zRyk5ODgy"},
+        {"grupa": "502", "profesor": "Pădureț Andrei", "link": "https://t.me/+B9q7Zqp0BQo1ZjRi"},
+        {"grupa": "503", "profesor": "Murahovschi Pavel", "link": "https://t.me/+uQCLVLUFV1plYTVi"},
     ],
     "Ciocana": [
-        {"grupa": "42", "instructor": "Uscatu Ion-Mihail", "link": "https://t.me/+fY7Ye5Og-VxkZDQy"},
-        {"grupa": "43", "instructor": "Uscatu Ion-Mihail", "link": "https://t.me/+KMn8eWvVsFBkNzZi"},
-        {"grupa": "44", "instructor": "Cecan Artur", "link": "https://t.me/+--athpFpXr9kMTBi"},
+        {"grupa": "42", "profesor": "Uscatu Ion-Mihail", "link": "https://t.me/+fY7Ye5Og-VxkZDQy"},
+        {"grupa": "43", "profesor": "Uscatu Ion-Mihail", "link": "https://t.me/+KMn8eWvVsFBkNzZi"},
+        {"grupa": "44", "profesor": "Cecan Artur", "link": "https://t.me/+--athpFpXr9kMTBi"},
     ]
 }
 
