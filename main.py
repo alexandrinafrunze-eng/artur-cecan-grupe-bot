@@ -26,7 +26,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
 
     await update.message.reply_text(
-        "🚗 Bun venit la Școala Auto Artur Cecan!\n\nSelectează sediul unde ești înscris:",
+        "🚗 Bun venit la Școala Auto Artur Cecan!\n\n"
+        "Te rugăm să selectezi sediul unde ești înscris:",
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
@@ -40,19 +41,16 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if data.startswith("sediu_"):
         sediu = data.replace("sediu_", "")
 
-        keyboard = []
+        keyboard = [
+            [InlineKeyboardButton(grupa, callback_data=f"grupa_{sediu}|{grupa}")]
+            for grupa in GRUPE[sediu]
+        ]
 
-        for grupa in GRUPE[sediu]:
-            keyboard.append(
-                [InlineKeyboardButton(grupa, callback_data=f"grupa_{sediu}|{grupa}")]
-            )
-
-        keyboard.append(
-            [InlineKeyboardButton("⬅️ Înapoi", callback_data="inapoi")]
-        )
+        keyboard.append([InlineKeyboardButton("⬅️ Înapoi", callback_data="inapoi")])
 
         await query.edit_message_text(
-            f"📚 Grupe disponibile la sediul {sediu}:",
+            f"📚 Grupe disponibile la sediul {sediu}:\n\n"
+            "Alege grupa în care ești înscris:",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
@@ -68,7 +66,11 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ]
 
         await query.edit_message_text(
-            f"✅ Ai selectat:\n\n{sediu}\n{grupa}",
+            f"🚗 Școala Auto Artur Cecan\n\n"
+            f"✅ Ai ales:\n"
+            f"📍 Sediul: {sediu}\n"
+            f"📚 {grupa}\n\n"
+            f"Apasă butonul de mai jos pentru a intra în grupul tău Telegram.",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
@@ -79,7 +81,8 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ]
 
         await query.edit_message_text(
-            "🚗 Bun venit la Școala Auto Artur Cecan!\n\nSelectează sediul unde ești înscris:",
+            "🚗 Bun venit la Școala Auto Artur Cecan!\n\n"
+            "Te rugăm să selectezi sediul unde ești înscris:",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
