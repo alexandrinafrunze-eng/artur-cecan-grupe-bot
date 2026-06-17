@@ -47,7 +47,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         for index, item in enumerate(GRUPE[sediu]):
             keyboard.append([
                 InlineKeyboardButton(
-                    f"📚 Grupa {item['grupa']} | 👨‍🏫 {item['instructor']}",
+                    f"📚 Grupa {item['grupa']} | 👨‍🏫 Prof. {item['profesor']}",
                     callback_data=f"grupa_{sediu}|{index}"
                 )
             ])
@@ -76,7 +76,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "<b>🚗 Școala Auto Artur Cecan</b>\n\n"
             f"📍 <b>Sediul:</b> {sediu}\n"
             f"📚 <b>Grupa:</b> {item['grupa']}\n"
-            f"👨‍🏫 <b>Instructor:</b> {item['instructor']}\n\n"
+            f"👨‍🏫 <b>Profesor:</b> {item['profesor']}\n\n"
             "Apasă pe butonul de mai jos pentru a intra în "
             "<b>grupul Telegram al grupei tale</b>.",
             reply_markup=InlineKeyboardMarkup(keyboard),
